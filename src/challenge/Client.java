@@ -1,9 +1,9 @@
 package challenge;
 
 public class Client {
-    String name;
-    Integer id;
-    Operation operation;
+    private String name;
+    private Integer id;
+    private Operation operation;
 
     public Client(String name, Operation operation) {
         this.name = name;

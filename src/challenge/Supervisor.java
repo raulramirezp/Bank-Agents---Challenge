@@ -11,7 +11,8 @@ public class Supervisor extends Agent{
     }
 
     public String callMethod() {
-        return this.assignedClient.makeOperation() + " finish in the " + this.name;
+        System.out.println(" The client + " + getAssignedClient().getName() );
+        return getAssignedClient().makeOperation() + " finish in the " + getName();
     }
 
 }
