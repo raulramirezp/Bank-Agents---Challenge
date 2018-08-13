@@ -13,7 +13,10 @@ public class Cashier extends Agent{
 
     @Override
     public String callMethod() {
-        return this.assignedClient.makeOperation() + " finish in the " + this.name;
+        System.out.println("Im am busy ? : " + isBusy() );
+        System.out.println(" The client + " + getAssignedClient().getName() );
+        setBusy(false);
+        return getAssignedClient().makeOperation() + " finish in the " + getName();
     }
 
 
