@@ -11,13 +11,7 @@ public class Cashier extends Agent{
         super(id,client);
     }
 
-    @Override
-    public String callMethod() {
-        System.out.println("Im am busy ? : " + isBusy() );
-        System.out.println(" The client + " + getAssignedClient().getName() );
-        setBusy(false);
-        return getAssignedClient().makeOperation() + " finish in the " + getName();
+    public String getDescription(){
+        return "Im am Cashier " + this.getName();
     }
-
-
 }

@@ -1,8 +1,10 @@
 package challenge;
 import java.util.Random;
-import java.util.concurrent.Callable;
+//import java.util.concurrent.Callable;
+import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Agent implements Callable {
+
+public abstract class Agent  {
     private int id;
     private boolean isBusy;
     private String name;
@@ -28,6 +30,10 @@ public abstract class Agent implements Callable {
         this.isBusy = busy;
     }
 
+    public void setAtentionTime(long atentionTime){
+        this.atentionTime = atentionTime;
+    }
+
     public boolean isBusy(){
         return this.isBusy;
     }
@@ -44,22 +50,10 @@ public abstract class Agent implements Callable {
         return this.name;
     }
 
-    @Override
-    public Object call() throws Exception {
-        //Template method
-        //.1 Start operation
-        this.isBusy = true;
-        System.out.println("Start client operation ");
-
-        //2.Generate random time of service
-        Random r = new Random();
-        this.atentionTime = 10000 + (15000 - 10000) * r.nextLong();
-        System.out.println(atentionTime);
-        Thread.sleep(4000);
-
-        //3. Finish client operation
-        return callMethod();
+    public long generateAtentionTime(){
+       this.atentionTime = ThreadLocalRandom.current().nextLong(10000, 15000 + 1);
+       return this.atentionTime;
     }
-    public abstract String callMethod();
+
 
 }
