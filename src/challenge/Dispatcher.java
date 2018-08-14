@@ -1,79 +1,77 @@
 package challenge;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.*;
-import java.util.function.Supplier;
 
-public class Dispatcher implements Supplier {
+public class Dispatcher {
     private ExecutorService executor;
     private List<Agent> suppliers;
+    private Queue<Agent> cashier;
+    private Queue<Agent> supervisor;
+    private Queue<Agent> director;
 
-    public Dispatcher( int nthreads){
+    private Queue<Client> queueClients;
+
+    public Dispatcher(int nthreads) {
         this.executor = Executors.newFixedThreadPool(nthreads);
         this.suppliers = new ArrayList<>();
 
-        for( int i = 0 ; i < 6; i++)
-            suppliers.add(new Cashier("Cashier"+i));
-        for( int i = 0 ; i < 3; i++)
-            suppliers.add(new Supervisor("Supervisor"+i));
+        this.cashier = new LinkedList<>();
+        this.supervisor = new LinkedList<>();
+        this.director = new LinkedList<>();
+
+        this.queueClients = new LinkedList<>();
+
+        for (int i = 0; i < 5; i++)
+            cashier.add(new Cashier("Cashier" + i));
+        for (int i = 0; i < 4; i++)
+            supervisor.add(new Supervisor("Supervisor" + i));
+        director.add(new Director("Director"));
+
+        for (int i = 0; i < 5; i++)
+            suppliers.add(new Cashier("Cashier" + i));
+        for (int i = 0; i < 4; i++)
+            suppliers.add(new Supervisor("Supervisor" + i));
         suppliers.add(new Director("Director"));
+
     }
 
-    public void shutdown(){
+    public void shutdown() {
         executor.shutdown();
     }
 
-    public void printAvailable(){
-        long count = suppliers.stream()
-                .filter( callabe -> callabe.isBusy() == false)
+    public long getAvailable() {
+        long count = this.suppliers.stream()
+                .filter(callabe -> !callabe.isBusy())
                 .count();
-        System.out.println("Disponibles "+ count);
+        //System.out.println("Available " + count);
+        return count;
     }
 
-    public void attend( Client client) throws ExecutionException, InterruptedException {
-        printAvailable();
-        for(int i = 0; i < suppliers.size(); i++){
-            Agent currentAgent = suppliers.get(i);
 
-            if( !currentAgent.isBusy()){
-                currentAgent.setBusy(true);
-                currentAgent.setAssignedClient(client);
-                System.out.println("Asignado " + currentAgent.getAssignedClient().getName());
-
-
-                CompletableFuture
-                        .supplyAsync(this, executor)
-                        .thenAccept(response -> {
-                            System.out.println(response);
+   public void attend(Client client) throws ExecutionException, InterruptedException {
+        if ( getAvailable() > 0 & queueClients.size() == 0) {
+                this.suppliers.stream()
+                        .filter(agent -> !agent.isBusy())
+                        .limit(1)
+                        .forEach(agent -> {
+                            agent.setBusy(true);
+                            agent.setAssignedClient(client);
+                            CompletableFuture
+                                    .supplyAsync(agent, executor)
+                                    .thenAccept(System.out::println);
                         });
-                return;
+        }else {
+            System.out.println("\n All of agents are busy \n");
+            queueClients.add(client);
+            while ( getAvailable() < 1){
+             //   System.out.println("Waiting for be attended");
             }
+            attend(queueClients.remove());
         }
-
-        System.out.println("\n All of agents are busy \n");
-    }
-
-    @Override
-    public String get() {
-        Agent currentAgent = suppliers.get(this.index);
-
-        System.out.println("Start client operation ");
-        //2.Generate random time of service
-
-        try {
-            Thread.sleep(currentAgent.generateAtentionTime());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Time for this thread " + currentAgent.getAtentionTime() + " thread name " + Thread.currentThread().getName());
-        System.out.println(" The client is + " + currentAgent.getAssignedClient().getName() );
-        System.out.println(  " finish in the " + currentAgent.getName() );
-        currentAgent.setAssignedClient(null);
-        currentAgent.setBusy(false);
-        return ("Finish " + Thread.currentThread().getName());
     }
 }
 

@@ -23,13 +23,14 @@ public class Main {
         app.attend(new Client(7, "Paola " , DEPOSIT));
         app.attend(new Client(8, "Lina " , SOLVEISSUE));
         app.attend(new Client(9, "Juan " , SOLVEISSUE));
-        app.attend(new Client(10, "David" , SOLVEISSUE));
-
+        app.attend(new Client(10, "David late" , SOLVEISSUE));
+        app.attend(new Client(10, "Carlos late" , SOLVEISSUE));
+        app.attend(new Client(10, "Lucia late" , SOLVEISSUE));
+        app.attend(new Client(10, "Laura late" , SOLVEISSUE));
 
       //  app.attend(clients);
 
         System.out.println(" Main finish here ");
         app.shutdown();
-        app.printAvailable();
     }
 }

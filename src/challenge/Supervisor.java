@@ -6,9 +6,5 @@ public class Supervisor extends Agent{
         super(name);
     }
 
-    public Supervisor(int id,Client client){
-        super(id,client);
-    }
-
 
 }
