@@ -9,21 +9,19 @@ import java.util.concurrent.*;
 public class Dispatcher {
     private ExecutorService executor;
     private List<Agent> suppliers;
-    private Queue<Agent> cashier;
-    private Queue<Agent> supervisor;
-    private Queue<Agent> director;
 
-    private Queue<Client> queueClients;
+    private BlockingQueue<Agent> cashier;
+    private BlockingQueue<Agent> supervisor;
+    private BlockingQueue<Agent> director;
+    private List<Observer> observers = new ArrayList<>();
 
-    public Dispatcher(int nthreads) {
+    public Dispatcher(int nthreads){
         this.executor = Executors.newFixedThreadPool(nthreads);
         this.suppliers = new ArrayList<>();
 
-        this.cashier = new LinkedList<>();
-        this.supervisor = new LinkedList<>();
-        this.director = new LinkedList<>();
-
-        this.queueClients = new LinkedList<>();
+        this.cashier = new LinkedBlockingQueue<>();
+        this.supervisor = new LinkedBlockingQueue<>();
+        this.director = new LinkedBlockingQueue<>();
 
         for (int i = 0; i < 5; i++)
             cashier.add(new Cashier("Cashier" + i));
@@ -39,39 +37,51 @@ public class Dispatcher {
 
     }
 
+    public void add(Observer observer){
+        this.observers.add(observer);
+    }
+
+    public void execute() throws ExecutionException, InterruptedException {
+        System.out.println("Here!");
+        for(Observer observer: observers)
+        {
+            observer.update();
+            System.out.println("fefdefefef");
+        }
+    }
     public void shutdown() {
         executor.shutdown();
     }
 
-    public long getAvailable() {
-        long count = this.suppliers.stream()
-                .filter(callabe -> !callabe.isBusy())
-                .count();
-        //System.out.println("Available " + count);
-        return count;
+
+    public void makeAFuture( Queue<Agent> agents, Client client){
+        Agent agentForBusy = agents.remove();
+        agentForBusy.setBusy(true);
+        agentForBusy.setAssignedClient(client);
+        CompletableFuture
+                .supplyAsync(agentForBusy, executor)
+                .thenAccept( response -> {
+                    agents.add(response);
+                    try {
+                        System.out.println("Size of queue now " + agents.size());
+                        this.execute();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                });
+
     }
 
-
    public void attend(Client client) throws ExecutionException, InterruptedException {
-        if ( getAvailable() > 0 & queueClients.size() == 0) {
-                this.suppliers.stream()
-                        .filter(agent -> !agent.isBusy())
-                        .limit(1)
-                        .forEach(agent -> {
-                            agent.setBusy(true);
-                            agent.setAssignedClient(client);
-                            CompletableFuture
-                                    .supplyAsync(agent, executor)
-                                    .thenAccept(System.out::println);
-                        });
-        }else {
-            System.out.println("\n All of agents are busy \n");
-            queueClients.add(client);
-            while ( getAvailable() < 1){
-             //   System.out.println("Waiting for be attended");
-            }
-            attend(queueClients.remove());
-        }
+            if(this.cashier.size() > 0){
+                makeAFuture(this.cashier, client);
+            } else if (this.supervisor.size() > 0)
+                makeAFuture(this.supervisor, client);
+            else if( this.director.size() > 0 )
+                makeAFuture(this.director, client);
     }
 }
 

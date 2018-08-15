@@ -16,9 +16,6 @@ public class Client {
         this.operation = operation;
     }
 
-    public void makeOperation(){
-        System.out.println("The client operation :  " + this.operation);
-    }
 
     public String getName() {
         return this.name;

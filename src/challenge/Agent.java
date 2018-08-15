@@ -3,7 +3,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
 
-public abstract class Agent implements Supplier<String> {
+public abstract class Agent implements Supplier<Agent> {
     private boolean isBusy;
     private String name;
     private Client assignedClient;
@@ -50,7 +50,7 @@ public abstract class Agent implements Supplier<String> {
     }
 
     @Override
-    public String get() {
+    public Agent get() {
 
         System.out.println("Start client operation for " +  Thread.currentThread().getName());
         //2.Generate random time of service
@@ -64,8 +64,9 @@ public abstract class Agent implements Supplier<String> {
         System.out.print(" \n The customer served was  " + this.getAssignedClient().getName() );
         System.out.print(" and  finish  at the agent " + this.getName() + " in " + this.getAttentionTime()/1000 + " seconds \n" );
         this.setAssignedClient(null);
-        this.setBusy(false);
-        return ("Finish " + Thread.currentThread().getName());
+       // this.setBusy(false);
+        System.out.println ("Finish " + Thread.currentThread().getName());
+        return this;
     }
 }
 
