@@ -6,13 +6,13 @@ public class Dispatcher extends Observer {
 
     private ExecutorService executor;
     private BlockingQueue<Client> queueClients;
-    private challenge.ObjectPool agents;
+    private ObjectPool agents;
 
 
     public Dispatcher(int nthreads){
         this.name = "Dispatcher";
         this.queueClients = new LinkedBlockingQueue<>();
-        this.agents = new challenge.ObjectPool();
+        this.agents = new ObjectPool();
 
         this.subject = agents;
         this.subject.add(this);
@@ -23,7 +23,7 @@ public class Dispatcher extends Observer {
 
 
     @Override
-    public void update() throws ExecutionException, InterruptedException {
+    public void update()  {
         System.out.println("Clients in Queue:\t" + this.queueClients.size());
         if( this.queueClients.size() >0 )
             this.attend(this.queueClients.remove());
