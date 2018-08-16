@@ -2,7 +2,13 @@ package challenge;
 
 import java.util.concurrent.ExecutionException;
 
-abstract class Observer {
-    protected Dispatcher subject;
+public abstract class Observer {
+    public String name;
+    protected ObjectPool subject;
+
     public abstract void update() throws ExecutionException, InterruptedException;
+
+    public String getName(){
+        return this.name;
+    }
 }

@@ -4,32 +4,17 @@ import java.util.function.Supplier;
 
 
 public abstract class Agent implements Supplier<Agent> {
-    private boolean isBusy;
+
     private String name;
     private Client assignedClient;
     private Double attentionTime;
 
     public Agent(String name ){
         this.name = name;
-        this.isBusy = false;
-    }
-
-
-    public Agent(Client assignedClient){
-        this.assignedClient = assignedClient;
     }
 
     public void setAssignedClient(Client assignedClient) {
         this.assignedClient = assignedClient;
-    }
-
-    public void setBusy(boolean busy) {
-        this.isBusy = busy;
-    }
-    
-
-    public boolean isBusy(){
-        return this.isBusy;
     }
 
     public Double getAttentionTime(){
@@ -62,9 +47,9 @@ public abstract class Agent implements Supplier<Agent> {
         }
        // System.out.println("Time for this thread " + this.getAttentionTime() + " thread name " + Thread.currentThread().getName());
         System.out.print(" \n The customer served was  " + this.getAssignedClient().getName() );
-        System.out.print(" and  finish  at the agent " + this.getName() + " in " + this.getAttentionTime()/1000 + " seconds \n" );
+        System.out.print(" and  finish  at the agent " + this.getName() + " in " + this.getAttentionTime()/1000
+                            + " seconds, for the operation  " + this.getAssignedClient().getOperation()  + "\n"  );
         this.setAssignedClient(null);
-       // this.setBusy(false);
         System.out.println ("Finish " + Thread.currentThread().getName());
         return this;
     }

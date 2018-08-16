@@ -16,6 +16,9 @@ public class Client {
         this.operation = operation;
     }
 
+    public Operation getOperation() {
+        return operation;
+    }
 
     public String getName() {
         return this.name;

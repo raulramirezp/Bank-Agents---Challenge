@@ -1,19 +1,12 @@
 package challenge;
 
-import java.util.concurrent.ExecutionException;
-
 public class Main {
-    public static void main( String [] args) throws ExecutionException, InterruptedException {
-    //Create de Subject
+    public static void main( String [] args) {
+        //Create the Observer
         Dispatcher app = new Dispatcher(10);
 
-        //Create de Observer
-        ObserverClient observer = new ObserverClient(app);
-
-        observer.createClients();
-        int size = observer.sizeQueue();
-        for(int i = 0 ; i < size; i++)
-            app.execute();
-        app.shutdown();
+        /*Create clients for attend*/
+        for(int i = 0; i < 20; i++)
+            app.attend(new Client(1,"Client " + i, Operation.DEPOSIT));
     }
 }

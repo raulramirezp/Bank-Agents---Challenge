@@ -5,18 +5,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/challenge/ObserverClient.java" line="38" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="894002d0-0d67-48d2-8d4b-9bcad545940c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/challenge/Observer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/challenge/ObserverClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Bank-Agents---Challenge/challenge/Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Bank-Agents---Challenge/challenge/Agent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Bank-Agents---Challenge/challenge/Dispatcher.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Bank-Agents---Challenge/challenge/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Bank-Agents---Challenge/challenge/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/challenge/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/challenge/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/challenge/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/challenge/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/challenge/Dispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/challenge/Dispatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/challenge/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/challenge/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="894002d0-0d67-48d2-8d4b-9bcad545940c" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -356,12 +345,12 @@
       <workItem from="1534173040744" duration="4915000" />
       <workItem from="1534179586025" duration="6912000" />
       <workItem from="1534255425662" duration="18310000" />
-      <workItem from="1534342121464" duration="8965000" />
+      <workItem from="1534342121464" duration="9564000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47801000" />
+    <option name="totallyTimeSpent" value="48400000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -376,7 +365,7 @@
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="7" visible="true" weight="0.24509804" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.24509804" />
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.3296875" />
       <window_info anchor="bottom" id="Terminal" order="1" />
